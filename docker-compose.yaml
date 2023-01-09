@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  postgres:
+  todolist_db:
     image: postgres:12.4-alpine
     restart: always
     environment:
@@ -10,4 +10,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - todolist_db:/var/lib/postgresql/data
+
+volumes:
+  todolist_db:
