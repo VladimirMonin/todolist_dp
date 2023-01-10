@@ -2,7 +2,6 @@ version: '3.9'
 services:
   front:
     image: sermalenk/skypro-front:lesson-35
-    restart: always
     ports:
       - 80:80
     depends_on:
@@ -11,10 +10,7 @@ services:
       - backend
 
   api:
-    build:
-      context: .
-    restart: always
-    image: vmonin/todolist_dp
+    image: ivinokurov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     env_file:
       - .docker_env
     environment:
@@ -35,10 +31,7 @@ services:
 
 
   migrations:
-    build:
-      context: .
-    restart: always
-    image: vmonin/todolist_dp
+    image: ivinokurov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     env_file:
       - .docker_env
     environment:
@@ -58,16 +51,14 @@ services:
 
 
   postgres:
-    image: postgres:15.1-alpine
+    image: postgres:12.4-alpine
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
       interval: 5s
