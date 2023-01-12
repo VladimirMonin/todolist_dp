@@ -14,17 +14,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - backend
     restart: always
     image: vmonin/todolist_dp
     env_file:
       - ./.env
+    volumes:
+      - ./:/app
     environment:
       POSTGRES_HOST: postgres
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - backend
+    ports:
+      - '8000:8000'
 
 
   postgres:
@@ -35,7 +39,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
       interval: 5s
@@ -47,7 +51,6 @@ services:
 
 volumes:
   db:
-  .docker_env:
 
 networks:
   backend:

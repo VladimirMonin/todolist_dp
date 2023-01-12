@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # DATABASE_URL = env('DATABASE_URL')
 DATABASE_URL=f'postgresql://{env("POSTGRES_USER")}:' \
              f'{env("POSTGRES_PASSWORD")}@postgres' \
-             f':{env("POSTGRESS_PORT")}/' \
+             f':{env("POSTGRES_PORT")}/' \
              f'{env("POSTGRES_DB")}'
 DATABASES = {
     'default': {
@@ -88,7 +88,7 @@ DATABASES = {
         'USER': env('POSTGRES_USER'),
         'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': env('POSTGRES_HOST'),
-        'PORT': env('PORT'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
 
