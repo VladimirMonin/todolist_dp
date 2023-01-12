@@ -18,7 +18,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(Path(BASE_DIR / '.env'))
+environ.Env.read_env(Path(BASE_DIR/'.env'))
 
 DEBUG = env.bool('DEBUG', default=False)
 SECRET_KEY = env('SECRET_KEY')
@@ -76,7 +76,11 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASE_URL = env('DATABASE_URL')
+# DATABASE_URL = env('DATABASE_URL')
+DATABASE_URL=f'postgresql://{env("POSTGRES_USER")}:' \
+             f'{env("POSTGRES_PASSWORD")}@postgres' \
+             f':{env("POSTGRESS_PORT")}/' \
+             f'{env("POSTGRES_DB")}'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
