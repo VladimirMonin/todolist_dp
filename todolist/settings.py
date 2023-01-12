@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # DATABASE_URL = env('DATABASE_URL')
-DATABASE_URL=f'postgresql://{env("POSTGRES_USER")}:' \
-             f'{env("POSTGRES_PASSWORD")}@postgres' \
-             f':{env("POSTGRES_PORT")}/' \
-             f'{env("POSTGRES_DB")}'
+# DATABASE_URL=f'postgresql://{env("POSTGRES_USER")}:' \ # Обе версии рабочих - но верхняя красивее :)
+#              f'{env("POSTGRES_PASSWORD")}@postgres' \
+#              f':{env("POSTGRES_PORT")}/' \
+#              f'{env("POSTGRES_DB")}'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

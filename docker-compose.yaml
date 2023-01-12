@@ -22,8 +22,6 @@ services:
       - ./.env
     volumes:
       - ./:/app
-    environment:
-      POSTGRES_HOST: postgres
     depends_on:
       postgres:
         condition: service_healthy
