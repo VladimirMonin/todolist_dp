@@ -12,13 +12,7 @@ services:
   api:
     image: vmonin/todolist_dp:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     env_file:
-      - .docker_env
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_HOST: postgres
+      - ./.env
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,33 +24,11 @@ services:
       - backend
 
 
-  migrations:
-    image: ivinokurov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-    env_file:
-      - .docker_env
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_HOST: postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: python manage.py migrate
-    volumes:
-      - ./.docker_env:/code/.docker_env
-    networks:
-      - backend
-
-
   postgres:
-    image: postgres:12.4-alpine
+    image: postgres:15.1-alpine
     restart: always
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - ./.env
     volumes:
       - db:/var/lib/postgresql/data
     healthcheck:
