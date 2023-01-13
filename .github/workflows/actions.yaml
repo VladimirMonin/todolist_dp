@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "deploy/docker-compose.yaml,deploy/.docker_env"
+          source: "deploy/docker-compose.yaml,deploy/.env"
           target: "todolist_db"
           strip_components: 1
       - name: deploy app
