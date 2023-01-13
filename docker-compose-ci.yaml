@@ -10,7 +10,7 @@ services:
       - backend
 
   api:
-    image: ivinokurov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: vmonin/todolist_dp:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     env_file:
       - .docker_env
     environment:
