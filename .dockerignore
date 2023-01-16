@@ -1,4 +1,6 @@
 # Own ignore-files
+
+.env
 db/
 skymarket/
 tests/
