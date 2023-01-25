@@ -4,6 +4,8 @@ from goals.models import BoardParticipant
 
 
 class BoardPermissions(permissions.IsAuthenticated):
+    """Доступ к доске (разрешено только создателю)"""
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(
@@ -15,6 +17,8 @@ class BoardPermissions(permissions.IsAuthenticated):
 
 
 class GoalCategoryPermissions(permissions.IsAuthenticated):
+    """Доступ к доске (разрешено создателю и редактору)"""
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(
@@ -27,6 +31,8 @@ class GoalCategoryPermissions(permissions.IsAuthenticated):
 
 
 class GoalPermissions(permissions.IsAuthenticated):
+    """Доступ к цели (разрешено создателю и редактору)"""
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(
@@ -39,6 +45,8 @@ class GoalPermissions(permissions.IsAuthenticated):
 
 
 class CommentPermissions(permissions.IsAuthenticated):
+    """Доступ к комментариям"""
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(
