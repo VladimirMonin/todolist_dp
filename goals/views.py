@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
@@ -83,8 +84,8 @@ class GoalListView(ListAPIView):
     filterset_class = GoalDateFilter
 
     def get_queryset(self) -> Goal:
-        return Goal.objects.filter(
-            category__board__participants__user=self.request.user, is_deleted=False
+        return Goal.objects.select_related('user', 'category__board').filter(
+            Q(category__board__participants__user_id=self.request.user.id) & ~Q(status=Goal.Status.archived)
         )
 
 
@@ -93,15 +94,14 @@ class GoalView(RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.GoalSerializer
     permission_classes = [permissions.IsAuthenticated, GoalPermissions]
 
-    def get_queryset(self) -> Goal:
-        return Goal.objects.filter(
-            category__board__participants__user=self.request.user, is_deleted=False
+    def get_queryset(self):
+        return Goal.objects.select_related('user', 'category__board').filter(
+            Q(category__board_participants__user_id=self.request.user.id) & ~Q(status=Goal.Status.archived)
         )
 
-    def perform_destroy(self, instance: Goal) -> Goal:
-        instance.is_deleted = True
-        instance.status = 4
-        instance.save()
+    def perform_destroy(self, instance: Goal):
+        instance.status = Goal.Status.archived
+        instance.save(update_fields=('status',))
         return instance
 
 
