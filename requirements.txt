@@ -4,3 +4,4 @@ psycopg2-binary==2.9.5
 djangorestframework==3.14.0
 social-auth-app-django==5.0.0
 django-filter==22.1
+marshmallow-dataclass==8.5.11

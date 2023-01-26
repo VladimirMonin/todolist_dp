@@ -37,6 +37,18 @@ services:
     networks:
       - backend
 
+  bot:
+    image: vmonin/todolist_dp:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    env_file:
+      - ./.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./.docker_env:/code/.docker_env
+    networks:
+      - backend
+    command: python manage.py runbot
 
 volumes:
   db:

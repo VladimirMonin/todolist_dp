@@ -1,7 +1,8 @@
 # Own ignore-files
 
 .env
-db/
+./db/
+db
 skymarket/
 tests/
 node_modules/
