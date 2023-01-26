@@ -45,19 +45,16 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, GoalCategoryPermissions]
 
     def get_queryset(self) -> GoalCategory:
-        return GoalCategory.objects.filter(
-            board__participants__user=self.request.user, is_deleted=False
+        return GoalCategory.objects.prefetch_related('board__participants').filter(
+            board__participants__user_id=self.request.user.id,
+            is_deleted=False
         )
 
     def perform_destroy(self, instance: GoalCategory) -> GoalCategory:
-        instance.is_deleted = True
-        goals = Goal.objects.filter(category=instance)
-
-        for goal in goals:
-            goal.is_deleted = True
-            goal.status = 4
-
-        instance.save()
+        with transaction.atomic():
+            instance.is_deleted = True
+            instance.save(update_fields=('is_deleted',))
+            Goal.objects.filter(category=instance).update(status=Goal.Status.archived)
         return instance
 
 
