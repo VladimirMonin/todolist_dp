@@ -86,6 +86,7 @@ class GoalListView(ListAPIView):
         )
 
 
+
 class GoalView(RetrieveUpdateDestroyAPIView):
     model = Goal
     serializer_class = serializers.GoalSerializer
