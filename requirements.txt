@@ -7,3 +7,4 @@ django-filter==22.1
 marshmallow-dataclass==8.5.11
 pytest-factoryboy==2.5.1
 pytest-django==4.5.2
+marshmallow==3.19.0
