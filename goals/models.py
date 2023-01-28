@@ -99,7 +99,7 @@ class Goal(DatesModelMixin):
     description = models.CharField(verbose_name="Описание", max_length=255)
     user = models.ForeignKey(User, verbose_name="Автор", on_delete=models.PROTECT)
     category = models.ForeignKey(GoalCategory, verbose_name="Категория", on_delete=models.PROTECT)
-    is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
+    # is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
     status = models.PositiveSmallIntegerField(
         verbose_name="Статус", choices=Status.choices, default=Status.to_do
     )

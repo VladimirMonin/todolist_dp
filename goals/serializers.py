@@ -63,8 +63,8 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate_goal(self, value):
-        if value.is_deleted:
-            raise serializers.ValidationError("not allowed in deleted goal")
+        # if value.is_deleted:
+        #     raise serializers.ValidationError("not allowed in deleted goal")
         if not BoardParticipant.objects.filter(
                 user=self.context["request"].user, board=value.category.board,
                 role__in=(BoardParticipant.Role.owner, BoardParticipant.Role.writer)

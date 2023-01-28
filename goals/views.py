@@ -86,7 +86,6 @@ class GoalListView(ListAPIView):
         )
 
 
-
 class GoalView(RetrieveUpdateDestroyAPIView):
     model = Goal
     serializer_class = serializers.GoalSerializer
@@ -94,7 +93,7 @@ class GoalView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Goal.objects.select_related('user', 'category__board').filter(
-            Q(category__board_participants__user_id=self.request.user.id) & ~Q(status=Goal.Status.archived)
+            Q(category__board__participants__user_id=self.request.user.id) & ~Q(status=Goal.Status.archived)
         )
 
     def perform_destroy(self, instance: Goal):

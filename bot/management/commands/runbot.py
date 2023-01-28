@@ -126,13 +126,13 @@ class Command(BaseCommand):
     @staticmethod
     def _get_goals(user: User) -> str:
         """Формирует список целей"""
-        goals = Goal.objects.filter(user=user, is_deleted=False)
+        goals = Goal.objects.filter(user=user)
         return '\n'.join([f'#{i.id} - {i.title}' for i in goals])
 
     @staticmethod
     def _get_categories(user: User) -> dict:
         """Формирует список категорий"""
         categories = GoalCategory.objects.filter(user=user, is_deleted=False)
-        cat_list = '\n'.join([f'  - _{i.title}_' for i in categories])
+        cat_list = '\n'.join([f'{i.id} - {i.title}' for i in categories])
         text = 'Выберите категорию из списка:\n' + cat_list
         return {'categories': categories, 'text': text}

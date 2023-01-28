@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
-from marshmallow import EXCLUDE
+from typing import List, Optional, Type, ClassVar
+from marshmallow import EXCLUDE, Schema
 
 
 @dataclass
@@ -71,3 +71,26 @@ class GetUpdatesResponse:
 
     class Meta:
         unknown = EXCLUDE
+
+# @dataclass
+# class GetUpdatesResponse:
+#     """https://core.telegram.org/bots/api#getupdates"""
+#     ok: bool
+#     result: List[UpdateObj]
+#
+#     Schema: ClassVar[Type[Schema]] = Schema
+#
+#     class Meta:
+#         unknown = EXCLUDE
+#
+#
+# @dataclass
+# class SendMessageResponse:
+#     """https://core.telegram.org/bots/api#sendmessage"""
+#     ok: bool
+#     result: Message
+#
+#     Schema: ClassVar[Type[Schema]] = Schema
+#
+#     class Meta:
+#         unknown = EXCLUDE
