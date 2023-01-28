@@ -26,6 +26,7 @@ class State(enum.Enum):
     create_goal = enum.auto()
 
 
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options) -> None:
